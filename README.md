@@ -12,7 +12,6 @@ This project provides a comprehensive analysis of sales data using Python and in
 5. [AI Agent](#ai-agent)
 6. [Model Evaluation](#model-evaluation)
 7. [Streamlit App](#streamlit-app)
-8. [Dependencies](#dependencies)
 
 ---
 
