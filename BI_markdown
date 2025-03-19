@@ -2,91 +2,67 @@
 
 This project provides a comprehensive analysis of sales data using Python and integrates an AI agent for interactive recommendations and insights. The code is divided into several sections, including data preprocessing, advanced data summarization, visualization, and an AI-powered agent for answering user queries.
 
+# AI-Business-Insight-assistant
+
+This project provides a comprehensive analysis of sales data using Python and integrates an AI agent for interactive recommendations and insights. The code is divided into several sections, including data preprocessing, advanced data summarization, visualization, and an AI-powered agent for answering user queries.
+
+---
+
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Code Overview](#code-overview)
+3. [Data Analysis](#data-analysis)
+4. [Visualization](#visualization)
+5. [AI Agent](#ai-agent)
+6. [Model Evaluation](#model-evaluation)
+7. [Streamlit App](#streamlit-app)
+
+---
+
+## Introduction
+This project analyzes sales data to extract key insights, such as total sales, best/worst performing months, and top-selling products. It also includes an AI agent powered by OpenAI's GPT-3.5-turbo model to provide recommendations and answer user queries based on the analyzed data.
+
+---
+
+## Code Overview
+The code is structured as follows:
+1. **Data Loading and Preprocessing**: Load the sales data and preprocess it for analysis.
+2. **Advanced Data Summary**: Compute key metrics such as total sales, average sales, and best/worst performing months.
+3. **Visualization**: Generate visualizations of sales trends by product.
+4. **AI Agent**: Create an AI agent using LangChain and OpenAI to provide recommendations and answer questions.
+5. **Model Evaluation**: Evaluate the AI agent's performance using predefined question-answer pairs.
+6. **Streamlit App**: Build an interactive web app using Streamlit for data visualization and AI agent interaction.
+
+---
+
+## Data Analysis
+### Key Metrics
+- **Total Sales**: Sum of all sales.
+- **Average Sales**: Mean sales value.
+- **Standard Deviation of Sales**: Measure of sales variability.
+- **Best/Worst Month**: Month with the highest/lowest sales.
+- **Top-Selling Product**: Product with the highest total sales.
+- **Most Frequent Product**: Product with the highest number of sales transactions.
+
+## Visualization
+The plt_sales_by_product function generates a plot of smoothed sales data for each product over time.
+
+## Model Evaluation
+The AI agent is evaluated using predefined question-answer pairs to ensure accuracy.
+
 
 
 ```python
-import pandas as pd
-import numpy as np
-import scipy 
-import json
-from langchain import PromptTemplate, LLMChain
-from langchain.chains import SequentialChain
-from langchain.evaluation import QAEvalChain
-from langchain.chat_models import ChatOpenAI
-from langchain.llms import OpenAI
-import matplotlib.pyplot as plt
-import seaborn as sns
-import matplotlib as mpl
-from matplotlib.colors import LinearSegmentedColormap, ListedColormap
-import random
-from langchain.tools import Tool
-from langchain.agents import load_tools, initialize_agent, AgentType
-from langchain.memory import ConversationBufferMemory
-from langchain.agents import ZeroShotAgent, AgentExecutor
-import streamlit as st
-from functools import partial
 
-# Step 2: Compute the Advanced Data Summary
+## AI Agent
+The AI agent is built using LangChain and OpenAI's GPT-3.5-turbo model. It provides recommendations and answers user queries based on the sales data summary.
 
-df=pd.read_csv('sales_data.csv')
-df.head()
-df.isna().sum()
+Tools
+OverallChainTool: Provides recommendations based on the sales data summary.
 
-# step 1
-df['Date_dt']=pd.to_datetime(df['Date'])
-df['Month']=df['Date_dt'].dt.month
+GeneralChatTool: Handles unrelated enquiries.
 
-
-total_sales=df['Sales'].sum()
-average_sale=df['Sales'].mean()
-standard_dev_sales=df['Sales'].std()
-
-# step 3
-sum_sales_by_month=np.array(df.groupby('Month')['Sales'].sum())
-best_month=np.argmax(sum_sales_by_month)+1
-worst_month=np.argmin(sum_sales_by_month)+1
-
-# step 4 a
-# top selling product (product with max sum sales)
-sales_aggr_by_product=df.groupby('Product')['Sales'].sum()
-bp_idx=np.argmax(sales_aggr_by_product)
-bp=sales_aggr_by_product.keys()[bp_idx]
-
-# most frequent product (product with more sales counts)
-product_sales_freq=df['Product'].value_counts()
-fqtp_idx=np.argmax(product_sales_freq)
-fqtp=product_sales_freq.keys()[fqtp_idx]
-
-advanced_data_summary= f" total sales for all products is {str(total_sales)} with mean { str(average_sale)} and standard deviation {str(standard_dev_sales)}"\
-                     f"\n Month with best overall sales is {str(best_month)} and the worst is in {str(worst_month)}."\
-                      f"\nFinally the top selling product is {str(bp)} and the most frequent one is {str(fqtp)}"
-
-
-
-## Visualization
-def plt_sales_by_product(df):
-    
-    df=df.reset_index()
-    df.set_index("Date_dt",inplace=True)
-    sales_by_product=df.groupby('Product')
-    
-    fig , axs=plt.subplots(1,len(sales_by_product),figsize=(30,10),sharey=True)
-    viridis = mpl.colormaps['viridis'].resampled(8)
-    
-    k=0
-    for grp_name,data_group in sales_by_product:
-        smoothed_data=data_group["Sales"].rolling(window=50).mean()
-        axs[k].plot(smoothed_data.index,smoothed_data,label=grp_name,color=viridis(random.random()),alpha=0.8)
-        axs[k].set_xlabel("Year",fontsize=30)
-        axs[k].set_ylabel("Sales",fontsize=30)
-        print(np.linspace(np.min(smoothed_data),np.max(smoothed_data),5))
-        axs[k].set_xticklabels(np.linspace(np.min((smoothed_data.index.year)),np.max((smoothed_data.index.year)),7),fontsize=20,rotation=45)
-        axs[k].set_yticklabels(np.linspace(np.min(smoothed_data),np.max(smoothed_data),5), fontsize=20)
-        axs[k].legend(loc='best',fontsize=20)
-        k=k+1
-    plt.show()
-    return fig
-
+RecallHistoryTool: Recalls chat history if requested.
 
 ## define first agent tool, sequential chain to provide analyses and recommendations 
 llm = ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0)
@@ -255,6 +231,8 @@ agent_chain.run("can you recall the chat history?")
 
 
 
+## Streamlit App
+The Streamlit app provides an interactive interface for data visualization and AI agent interaction.
 
 ```python
 
