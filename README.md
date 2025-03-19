@@ -46,10 +46,6 @@ The plt_sales_by_product function generates a plot of smoothed sales data for ea
 ## Model Evaluation
 The AI agent is evaluated using predefined question-answer pairs to ensure accuracy.
 
-
-
-```python
-
 ## AI Agent
 The AI agent is built using LangChain and OpenAI's GPT-3.5-turbo model. It provides recommendations and answers user queries based on the sales data summary.
 
@@ -59,6 +55,9 @@ OverallChainTool: Provides recommendations based on the sales data summary.
 GeneralChatTool: Handles unrelated enquiries.
 
 RecallHistoryTool: Recalls chat history if requested.
+
+```python
+
 
 ## define first agent tool, sequential chain to provide analyses and recommendations 
 llm = ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0)
