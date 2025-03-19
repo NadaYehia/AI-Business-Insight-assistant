@@ -182,17 +182,6 @@ def evaluate_model(qa_pairs,advanced_data_summary):
 
 ```
 
-    /tmp/ipykernel_69/1185357666.py:85: LangChainDeprecationWarning: The class `ChatOpenAI` was deprecated in LangChain 0.0.10 and will be removed in 1.0. An updated version of the class exists in the :class:`~langchain-openai package and should be used instead. To use it run `pip install -U :class:`~langchain-openai` and import as `from :class:`~langchain_openai import ChatOpenAI``.
-      llm = ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0)
-    /tmp/ipykernel_69/1185357666.py:94: LangChainDeprecationWarning: The class `LLMChain` was deprecated in LangChain 0.1.17 and will be removed in 1.0. Use :meth:`~RunnableSequence, e.g., `prompt | llm`` instead.
-      data_analysis_chain=LLMChain(llm=llm, prompt=data_analysis_prompt,output_key="analysis")
-    /tmp/ipykernel_69/1185357666.py:148: LangChainDeprecationWarning: Please see the migration guide at: https://python.langchain.com/docs/versions/migrating_memory/
-      memory = ConversationBufferMemory(memory_key="chat_history")
-    /tmp/ipykernel_69/1185357666.py:157: LangChainDeprecationWarning: LangChain agents will continue to be supported, but it is recommended for new use cases to be built with LangGraph. LangGraph offers a more flexible and full-featured framework for building agents, including support for tool-calling, persistence of state, and human-in-the-loop workflows. For details, refer to the `LangGraph documentation <https://langchain-ai.github.io/langgraph/>`_ as well as guides for `Migrating from AgentExecutor <https://python.langchain.com/docs/how_to/migrate_agent/>`_ and LangGraph's `Pre-built ReAct agent <https://langchain-ai.github.io/langgraph/how-tos/create-react-agent/>`_.
-      agent = ZeroShotAgent(llm_chain=llm_chain, tools=tools, verbose=True)
-    
-
-
 ```python
 agent_chain.run("can you recall the chat history?")
 ```
