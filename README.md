@@ -53,5 +53,8 @@ GeneralChatTool: Handles unrelated enquiries.
 
 RecallHistoryTool: Recalls chat history if requested.
 
+## Model Evaluation
+The AI agent is evaluated using predefined question-answer pairs to ensure accuracy.
+
 ## Streamlit App
 The Streamlit app provides an interactive interface for data visualization and AI agent interaction.
