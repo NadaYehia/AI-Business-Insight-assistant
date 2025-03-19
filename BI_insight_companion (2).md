@@ -1,3 +1,9 @@
+# AI-Business-Insight-assistant
+
+This project provides a comprehensive analysis of sales data using Python and integrates an AI agent for interactive recommendations and insights. The code is divided into several sections, including data preprocessing, advanced data summarization, visualization, and an AI-powered agent for answering user queries.
+
+
+
 ```python
 import pandas as pd
 import numpy as np
